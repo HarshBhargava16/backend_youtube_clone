@@ -261,7 +261,7 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
     }
   ).select("-password");
 
-  return res.status(200).json(200, user, "Avatar uploaded successfully ");
+  return res.status(200).json(new ApiResponse(200, user, "Avatar uploaded successfully "));
 });
 
 const updateUserCoverImage = asyncHandler(async (req, res) => {
