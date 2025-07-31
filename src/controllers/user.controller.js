@@ -6,7 +6,7 @@ import { uploadOnCloudinary } from "../utils/cloudinary.js";
 
 const generateAccessTokenAndRefreshToken = async (userId) => {
   try {
-    const user = User.findById(userId);
+    const user = await User.findById(userId);
     const accessToken = user.generateAccessToken();
     const refreshToken = user.generateRefreshToken();
 
@@ -78,7 +78,9 @@ const loginUser = asyncHandler(async (req, res) => {
     throw new ApiError(400, "username and email is required");
   }
 
-  const user = await User.findOne($or[({ email }, { userName })]);
+  const user = await User.findOne({
+    $or: [{ email }, { userName }],
+  });
 
   if (!user) {
     throw new ApiError(404, "Invalied credential");
@@ -103,8 +105,8 @@ const loginUser = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .cookie("accessToken", accessToken, options)
-    .cookie("refresh Token", cookie)
+    .cookie("accessToken",accessToken, options)
+    .cookie("refreshToken",refreshToken, options)
     .json(
       new ApiResponse(
         200,
