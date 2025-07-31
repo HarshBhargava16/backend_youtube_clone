@@ -3,7 +3,7 @@ import { asyncHandler } from "../utils/asynHandler.js";
 import ApiError from "../utils/ApiError.js";
 import { User } from "../models/user.model.js";
 
-export const verifyJwt = asyncHandler(async (res, req, next) => {
+export const verifyJwt = asyncHandler(async (req, res, next) => {
   try {
     const token =
       req.cookies?.accessToken ||
@@ -28,5 +28,3 @@ export const verifyJwt = asyncHandler(async (res, req, next) => {
     throw new ApiError(401, "Invalid Access Token");
   }
 });
-
-
